@@ -1,15 +1,10 @@
 package com.project.petrichor.model;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "questions")
 public class Question {
@@ -21,9 +16,41 @@ public class Question {
     @NotNull
     private String text;
 
-    private Integer voteValue;
+    private Integer voteValue=0;
     @NotNull
     @ManyToOne
     @JoinColumn(name="eventId")
     private Event event;
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Integer getVoteValue() {
+        return voteValue;
+    }
+
+    public void setVoteValue(Integer voteValue) {
+        this.voteValue = voteValue;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 }

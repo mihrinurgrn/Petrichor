@@ -1,1 +1,1 @@
-# petrichor
+# petrichor-project

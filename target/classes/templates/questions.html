@@ -11,27 +11,24 @@
         <tr>
             <th>Question </th>
             <th>Votes </th>
-
         </tr>
-        <tr th:each="questions : ${questions}" th:object="${question}">
-            <td th:text="*{text} "></td>
-            <td th:text="*{voteValue} "></td>
+        <tr th:each="question : ${questions}" th:object="${question}" >
+            <td th:text="${question.text} "></td>
+            <td th:text="${question.voteValue} "></td>
 
+            <td>
             <a th:href="@{/voteQuestion/{id} (id=${question.questionId})}">Vote the question</a>
+
+            </td>
         </tr>
     </table>
-
-
-    <form method="post" th:action="@{/questionList/saveQuestion}" th:object="${questionRegister}">
+    <form method="post" th:action="@{/questionList/saveQuestion}"
+          th:name="passcode" th:object="${questionRegister}">
         Question:<br>
         <input type="text" th:field="*{text}"><br>
-
         <input type="submit" value="Submit">
     </form>
+    <button><a th:href="@{/exit}">EXIT</a></button>
 </div>
-
-
-
-
 </body>
 </html>
