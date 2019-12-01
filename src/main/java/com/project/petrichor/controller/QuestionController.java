@@ -47,20 +47,12 @@ public class QuestionController {
     @GetMapping(value = "/questions2")
     public String findEvent2(Model model,@ModelAttribute("activePasscode") String passcode2
             ,@ModelAttribute("activeEvent") Event event) {
-
-
-
             passcode2=event.getEventPasscode();
             List<Question> questions=questionService.findQuestionsByPasscode(passcode2);
             model.addAttribute("questions",questions);
-
-
-
-        Question questionRegister = new Question();
-        model.addAttribute("questionRegister",questionRegister);
-
-
-        return "questions";
+            Question questionRegister = new Question();
+            model.addAttribute("questionRegister",questionRegister);
+            return "questions";
     }
 
 
@@ -68,48 +60,38 @@ public class QuestionController {
     @GetMapping(value = "/questions")
     public String findEvent(@RequestParam(value="passcode",required=false) String passcode1
             , Model model, @ModelAttribute("activePasscode") String passcode2,
-                            HttpServletRequest request, HttpServletResponse response) {
-
-
-
-
-
+                            final RedirectAttributes redirectAttributes) {
         if(passcode1==null)
         {
             return "redirect:/questions2";
         }
-
         Event event=eventService.findByPassCode(passcode1);
+
+        if(passcode1==null && passcode2==null) {
+            redirectAttributes.addFlashAttribute("msg","Lütfen bir passcode giriniz");
+            return "redirect:/passcode";
+        }
 
         if(event==null)
         {
-            return "passcode";
+            redirectAttributes.addFlashAttribute("msg","Böyle bir passcode bulunmamaktadır");
+            return "redirect:/passcode";
         }
-
-        if(passcode1==null && passcode2==null) {
-            return "passcode";
-        }
-
 
         if(passcode2.isEmpty()!=false)
         {
             model.addAttribute("activeEvent",eventService.findByPassCode(passcode1));
             List<Question> questions=questionService.findQuestionsByPasscode(passcode1);
             model.addAttribute("questions",questions);
-
-
         }
         if(passcode2.isEmpty()==false && passcode1!=null)
         {
             model.addAttribute("activeEvent",eventService.findByPassCode(passcode1));
             List<Question> questions=questionService.findQuestionsByPasscode(passcode1);
             model.addAttribute("questions",questions);
-
         }
         Question questionRegister = new Question();
         model.addAttribute("questionRegister",questionRegister);
-
-
         return "questions";
    }
 

@@ -33,26 +33,23 @@ public class EventController {
 
     @RequestMapping(value = "/eventSave", method = RequestMethod.POST)
     public String eventSave(@ModelAttribute @Validated Event eventRegister,
-                            final RedirectAttributes redirectAttributes,Model model) {
-        try {
+                            final RedirectAttributes redirectAttributes) {
+
           List<Event> EventList=eventService.findAll();
 
-              int i = 0;
+              int i;
               for (i = 0; i < EventList.size(); i++) {
 
                   if (EventList.get(i).getEventPasscode().equals(eventRegister.getEventPasscode())) {
-                      throw new IllegalArgumentException("Bu passcode ile daha önce bir event olusturuldu.");
+                      redirectAttributes.addFlashAttribute("msg", "Bu passcode ile daha önce bir event olusturuldu");
+                      return "redirect:/event";
                   }
               }
 
             eventService.save(eventRegister);
-            redirectAttributes.addFlashAttribute("msg", "success");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("msg", "fail");
-            return "redirect:/event";
-        }
+            redirectAttributes.addFlashAttribute("msg", "Event olusturuldu");
 
-        return "redirect:/home";
+        return "redirect:/event";
     }
 
 
