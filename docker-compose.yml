@@ -1,17 +1,30 @@
-#version: "3"
-#services:
-#  postgres:
-#    image: postgres:latest
-#    container_name: postgres
-#    expose:
-#    - 5433
-#    ports:
-#      - 5433:5433
-#
-#  app:
-#    image: omer/petrichor
-#    ports:
-#    - 8080:8080
-#    links:
-#    - postgres
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    expose:
+    - 5434
+    ports:
+      - 5434:5434
+    environment:
+      - POSTGRES_PASSWORD=mihri789
+      - POSTGRES_USER=mihrimurgrn
+      - POSTGRES_DB=petrichor
+    restart: unless-stopped
+
+  app:
+    munugo:
+    image: munugo:latest
+    network_mode: bridge
+    container_name: munugo
+    expose:
+     - 8080
+    restart: unless-stopped
+    depends_on:
+    - postgres
+    ports:
+    - 8080:8080
+    links:
+    - postgres
 
