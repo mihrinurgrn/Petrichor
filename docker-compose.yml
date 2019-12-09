@@ -4,9 +4,9 @@ services:
     image: postgres:latest
     container_name: postgres
     expose:
-    - 5434
+    - 5432
     ports:
-      - 5434:5434
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=mihri789
       - POSTGRES_USER=mihrimurgrn
@@ -14,10 +14,10 @@ services:
     restart: unless-stopped
 
   app:
-    munugo:
-    image: munugo:latest
-    network_mode: bridge
-    container_name: munugo
+    petrichor:
+    image: petrichor:latest
+#    network_mode: bridge
+    container_name: petrichor
     expose:
      - 8080
     restart: unless-stopped
