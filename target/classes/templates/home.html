@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 
@@ -8,4 +8,31 @@
 <p>Click <a th:href="@{/passcode}">here</a> to ask </p>
 <p>Click <a th:href="@{/event}">here</a> for a new EVENT </p>
 </body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link th:href="@{/cs/home.css}" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="overlay">
+    <form>
+        <div class="con">
+            <header class="head-form">
+                <h1>Welcome!</h1>
+            </header>
+            <div class="field-set">
+
+             <button><a th:href="@{/passcode}"> Click here to ask </a> </button>
+             <button><a th:href="@{/event}">Click here for a new EVENT</a> </button>
+
+            </div>
+            <br>
+        </div>
+    </form>
+</div>
+</body>
 </html>
+

@@ -1,6 +1,8 @@
+<!--
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
+    <link th:href="@{/static/usual}" type="text/css" rel="stylesheet"/>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -15,3 +17,58 @@
 </form>
 </body>
 </html>
+-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link th:href="@{/cs/passcode.css}" type="text/css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="overlay">
+    <!-- LOGN IN FORM by Omar Dsoky -->
+    <form th:action="@{/questions}" >
+        <!--   con = Container  for items in the form-->
+        <div class="con">
+            <!--     Start  header Content  -->
+            <header class="head-form">
+                <h2 th:text="${msg}"></h2>
+                <h2>Find Event</h2>
+                <!--     A welcome message or an explanation of the login form -->
+                <p>Enter password and start to ask</p>
+            </header>
+            <!--     End  header Content  -->
+            <br>
+            <div class="field-set">
+
+                <!--   user name -->
+                <span class="input-item">
+           <i class="fa fa-user-circle"></i>
+         </span>
+                <!--   user name Input-->
+                <input th:name="passcode" class="form-input" id="txt-input" type="text" placeholder="Passcode" required>
+
+                <br>
+
+
+                <br>
+                <!--        buttons -->
+                <!--      button LogIn -->
+                <button class="log-in" type="submit"> Find Event </button>
+            </div>
+
+
+
+            <!--   End Conrainer  -->
+        </div>
+
+        <!-- End Form -->
+    </form>
+</div>
+
+</body>
+</html>
+

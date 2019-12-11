@@ -41,13 +41,13 @@ public class EventController {
               for (i = 0; i < EventList.size(); i++) {
 
                   if (EventList.get(i).getEventPasscode().equals(eventRegister.getEventPasscode())) {
-                      redirectAttributes.addFlashAttribute("msg", "Bu passcode ile daha önce bir event olusturuldu");
+                      redirectAttributes.addFlashAttribute("msg", "Already created with this passcode, try another");
                       return "redirect:/event";
                   }
               }
 
             eventService.save(eventRegister);
-            redirectAttributes.addFlashAttribute("msg", "Event olusturuldu");
+            redirectAttributes.addFlashAttribute("msg", "Event created");
 
         return "redirect:/event";
     }

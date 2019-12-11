@@ -133,6 +133,44 @@ public class QuestionController {
         return "redirect:/questions";
     }
 
+
+
+
+
+
+
+//    @RequestMapping(value = "/voteQuestion/{id}", method = RequestMethod.GET)
+//    public String findEvent(@PathVariable("id") Integer id,HttpServletRequest request,
+//                            HttpServletResponse response,
+//                            @CookieValue(value = "vote", defaultValue = "1") String voteValue,
+//                            @CookieValue(value = "question", defaultValue = "null") String questionId) {
+//        Cookie[] cookies=request.getCookies();
+//
+//        int k;
+//        for(k=0;k<cookies.length;k++)
+//        {
+//            cookies[k].setMaxAge(0);
+//            response.addCookie(cookies[k]);
+//
+////            if(cookies[k].getValue().equals(id.toString())) {
+////                return "redirect:/questions";
+////            }
+//        }
+//        questionService.voteTheQuestion(id);
+//        Cookie cookie=questionService.createCookie(id.toString(),id.toString());
+//        response.addCookie(cookie);
+//        return "redirect:/questions";
+//    }
+//
+
+
+
+
+
+
+
+
+
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
     public String exit(SessionStatus status){
         status.setComplete();

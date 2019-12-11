@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
@@ -15,3 +16,56 @@
 </form>
 </body>
 </html>
+-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link th:href="@{/cs/event.css}" type="text/css" rel="stylesheet"/>
+    <title>Hello World!</title>
+</head>
+<body>
+<div class="overlay">
+    <form method="post" th:action="@{/eventSave}" th:object="${eventRegister}" >
+        <!--   con = Container  for items in the form-->
+        <div class="con">
+            <!--     Start  header Content  -->
+            <header class="head-form">
+                <h2>Create an EVENT</h2>
+                <h2 th:text="${msg}"></h2>
+            </header>
+            <!--     End  header Content  -->
+            <br>
+            <div class="field-set">
+
+                <!--   user name -->
+                <span class="input-item">
+           <i class="fa fa-user-circle"></i>
+         </span>
+                <!--   user name Input-->
+                <input th:field="*{eventName}" class="form-input" id="txt-input" type="text" placeholder="EventName" required>
+
+                <br>
+
+                <!--   Password -->
+
+                <span class="input-item">
+        <i class="fa fa-key"></i>
+       </span>
+                <!--   Password Input-->
+                <input th:field="*{eventPasscode}" class="form-input" type="text" placeholder="Passcode" id="pwd"  name="password" required>
+
+                <!--      Show/hide password  -->
+                <button type="submit" value="Submit"> Create Event </button>
+
+            </div>
+            </div>
+        <!-- End Form -->
+    </form>
+    <button><a th:href="@{/exit}">Go To Home Page</a></button>
+</div>
+</body>
+</html>
+
