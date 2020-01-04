@@ -82,12 +82,14 @@ public class QuestionController {
         {
             model.addAttribute("activeEvent",eventService.findByPassCode(passcode1));
             List<Question> questions=questionService.findQuestionsByPasscode(passcode1);
+           /* questionService.orderByVoteNumber(questions);*/
             model.addAttribute("questions",questions);
         }
         if(passcode2.isEmpty()==false && passcode1!=null)
         {
             model.addAttribute("activeEvent",eventService.findByPassCode(passcode1));
             List<Question> questions=questionService.findQuestionsByPasscode(passcode1);
+         /*   questionService.orderByVoteNumber(questions);*/
             model.addAttribute("questions",questions);
         }
         Question questionRegister = new Question();

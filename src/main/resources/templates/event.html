@@ -1,22 +1,4 @@
-<!--
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <title>Hello World!</title>
-</head>
-<body>
-<form method="post" th:action="@{/eventSave}" th:object="${eventRegister}">
-    Name:<br>
-    <input type="text" th:field="*{eventName}"><br>
-    Passcode:<br>
-    <input type="text" th:field="*{eventPasscode}"><br>
-    <input type="submit" value="Submit">
-    <h2 th:text="${msg}"></h2>
-</form>
-</body>
-</html>
--->
+
 
 
 <!DOCTYPE html>
@@ -59,12 +41,13 @@
 
                 <!--      Show/hide password  -->
                 <button type="submit" value="Submit"> Create Event </button>
+                <button><a th:href="@{/exit}">Go To Home Page</a></button>
 
             </div>
             </div>
         <!-- End Form -->
     </form>
-    <button><a th:href="@{/exit}">Go To Home Page</a></button>
+
 </div>
 </body>
 </html>

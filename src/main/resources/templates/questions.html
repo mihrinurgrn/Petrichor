@@ -1,37 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-
-<!--<div class="col-12">-->
-<!--    <table class="table table-bordered">-->
-<!--        <tr>-->
-<!--            <th>Question </th>-->
-<!--            <th>Votes </th>-->
-<!--        </tr>-->
-<!--        <tr th:each="question : ${questions}" th:object="${question}" >-->
-<!--            <td th:text="${question.text} "></td>-->
-<!--            <td th:text="${question.voteValue} "></td>-->
-
-<!--            <td>-->
-<!--            <a th:href="@{/voteQuestion/{id} (id=${question.questionId})}">Vote the question</a>-->
-
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-<!--    <form method="post" th:action="@{/questionList/saveQuestion}"-->
-<!--          th:name="passcode" th:object="${questionRegister}">-->
-<!--        Question:<br>-->
-<!--        <input type="text" th:field="*{text}"><br>-->
-<!--        <input type="submit" value="Submit">-->
-<!--    </form>-->
-<!--    <button><a th:href="@{/exit}">EXIT</a></button>-->
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
 
 
 <!DOCTYPE html>
@@ -74,13 +40,14 @@
          </span>
                     <input th:field="*{text}" class="form-input" id="txt-input" type="text" placeholder="Question" required>
                     <button  value="submit" class="log-in"> Ask </button>
+                    <button ><a th:href="@{/exit}">EXIT</a></button>
                 </div>
             </div>
         </form>
     </div>
 
     </form>
-    <button ><a th:href="@{/exit}">EXIT</a></button>
+
 </div>
 </body>
 </html>

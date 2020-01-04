@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QuestionServiceImp implements QuestionService {
@@ -47,6 +46,35 @@ public class QuestionServiceImp implements QuestionService {
         Cookie cookie=new Cookie(name,value);
         return cookie;
     }
+
+/*
+    @Override
+    public List<Question> orderByVoteNumber(List<Question> questions) {
+        Collections.sort(questions, new Comparator() {
+            @Override
+            public int compare(Ogrenci o1, Ogrenci o2) {
+                Integer oYear1 = o1.getDogumYili();
+                Integer oYear2 = o2.getDogumYili();
+                return oYear1.compareTo(oYear2);
+            }
+    */
+/*    for (int i=0;i<questions.size();i++)
+        {
+            int voteValue1=questions.get(i).getVoteValue();
+            int voteValue2=questions.get(i+1).getVoteValue();
+            if(voteValue2>voteValue1)
+            {
+                Collections.sort(questions,);
+
+
+            }
+
+        }*//*
+
+        return questions;
+
+    }
+*/
 
     @Override
     public Question findQuestionById(int id) {
