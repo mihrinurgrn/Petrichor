@@ -53,4 +53,13 @@ public class Question {
     public void setEvent(Event event) {
         this.event = event;
     }
+
+    public Question(String text, Integer voteValue, Event event) {
+        this.text=text;
+        this.voteValue=voteValue;
+        this.event=event;
+    }
+
+    public Question() {
+    }
 }
