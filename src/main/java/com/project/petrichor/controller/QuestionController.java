@@ -33,18 +33,18 @@ public class QuestionController {
     @Autowired
     EventService eventService;
 
-    /*@ModelAttribute("activeEvent")
+    @ModelAttribute("activeEvent")
     public Event setUpEvent() {
         return new Event();
     }
-    */
+
     @ModelAttribute("activePasscode")
     public String setUpPasscode() {
         return new String();
     }
 
 
-    /*@GetMapping(value = "/questions2")
+    @GetMapping(value = "/questions2")
     public String findEvent2(Model model,@ModelAttribute("activePasscode") String passcode2
             ,@ModelAttribute("activeEvent") Event event) {
             passcode2=event.getEventPasscode();
@@ -54,7 +54,7 @@ public class QuestionController {
             model.addAttribute("questionRegister",questionRegister);
             return "questions";
     }
-    */
+    
 
 
     @GetMapping(value = "/questions")

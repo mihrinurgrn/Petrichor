@@ -24,13 +24,13 @@ public class EventController {
     QuestionService questionService;
 
 
-    /*@GetMapping("/event")
+    @GetMapping("/event")
     public String addEvent(Model model) {
         Event eventRegister = new Event();
         model.addAttribute("eventRegister",eventRegister);
         return "event";
     }
-    */
+
     @RequestMapping(value = "/eventSave", method = RequestMethod.POST)
     public String eventSave(@ModelAttribute @Validated Event eventRegister,
                             final RedirectAttributes redirectAttributes) {

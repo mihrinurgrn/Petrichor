@@ -68,7 +68,5 @@ public class QuestionServiceImpTest {
         assertEquals(result.getText(), questionSave.getText());
     }
 
-    public void should_return_questions_by_passcode(){
 
-    }
 }
