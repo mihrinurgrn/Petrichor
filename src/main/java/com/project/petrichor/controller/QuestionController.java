@@ -7,6 +7,8 @@ import com.project.petrichor.service.EventService;
 import com.project.petrichor.service.QuestionService;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-
+@SessionAttributes({"activeEvent","activePasscode"})
 
 public class QuestionController {
     @Autowired
@@ -43,7 +45,26 @@ public class QuestionController {
         return new String();
     }
 
+    /////////////////////
 
+
+
+    @MessageMapping("/questions2")
+    @SendTo("/topic/greetings")
+    public Question questions2(Question question) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return new Question(question.getText(),question.getVoteValue(),question.getEvent());
+    }
+
+
+    @MessageMapping("/questions")
+    @SendTo("/topic/greetings")
+    public Question questions(Question question) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return new Question(question.getText(),question.getVoteValue(),question.getEvent());
+    }
+
+    ////////////////////////
     @GetMapping(value = "/questions2")
     public String findEvent2(Model model,@ModelAttribute("activePasscode") String passcode2
             ,@ModelAttribute("activeEvent") Event event) {
@@ -66,6 +87,7 @@ public class QuestionController {
             return "redirect:/questions2";
         }
         Event event=eventService.findByPassCode(passcode1);
+        model.addAttribute("activeEvent",eventService.findByPassCode(passcode1));
 
         if(passcode1==null && passcode2==null) {
             redirectAttributes.addFlashAttribute("msg","Lütfen bir passcode giriniz");
@@ -101,7 +123,7 @@ public class QuestionController {
     @RequestMapping(value = "/questionList/saveQuestion" , method = RequestMethod.POST)
     public String saveQuestion(
                                @ModelAttribute @Validated Question questionRegister,
-                               @ModelAttribute("activeEvent") Event event, Model model,
+                               @ModelAttribute("activeEvent")  Event event, Model model,
                                final RedirectAttributes redirectAttributes) {
         try {
             questionRegister.setEvent(event);
@@ -182,3 +204,8 @@ public class QuestionController {
 
 
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////
