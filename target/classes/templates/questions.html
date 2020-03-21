@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <script type="text/javascript"
-            th:src="@{/webjars/jquery/3.1.1-1/jquery.min.js/}"></script>
+            th:src="@{/webjars/jquery/jquery.min.js/}"></script>
     <script type="text/javascript"
-            th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
-
+            th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -24,16 +23,17 @@
     Javascript and reload this page!</h2></noscript>
 <div class="form-group">
     <label for="connect">WebSocket connection:</label>
-    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+    <button id="connect" class="btn btn-default" type="submit" onclick="connect()">Connect</button>
+    <button id="disconnect" class="btn btn-default" type="submit" onclick="disconnect()">Disconnect
     </button>
 </div>
 <div class="col-12">
     <div class="overlay">
         <header class="head-form">
+
             <p>Ask your question</p>
         </header>
-        <form method="post" th:action="@{/questionList/saveQuestion}"
+        <form method="post" onclick="sendName()"
               th:name="passcode" th:object="${questionRegister}">
             <div class="con">
                 <table class="table table-bordered">
@@ -58,7 +58,7 @@
            <i class="fa fa-user-circle"></i>
          </span>
                     <input th:field="*{text}" class="form-input" id="txt-input" type="text" placeholder="Question" required>
-                    <button  value="submit" class="log-in"> Ask </button>
+                    <button id="send" value="submit" class="log-in"> Send </button>
                     <button ><a th:href="@{/exit}">EXIT</a></button>
                 </div>
             </div>
@@ -70,7 +70,4 @@
 </div>
 </body>
 </html>
-
-
-
 

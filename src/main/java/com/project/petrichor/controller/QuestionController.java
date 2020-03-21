@@ -45,23 +45,14 @@ public class QuestionController {
         return new String();
     }
 
-    /////////////////////
+    ////////////////////
 
 
-
-    @MessageMapping("/questions2")
-    @SendTo("/topic/greetings")
-    public Question questions2(Question question) throws Exception {
+    @MessageMapping("/question")
+    @SendTo("/topic/question")
+    public String questions(String question) throws Exception {
         Thread.sleep(1000); // simulated delay
-        return new Question(question.getText(),question.getVoteValue(),question.getEvent());
-    }
-
-
-    @MessageMapping("/questions")
-    @SendTo("/topic/greetings")
-    public Question questions(Question question) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return new Question(question.getText(),question.getVoteValue(),question.getEvent());
+        return question;
     }
 
     ////////////////////////
@@ -186,13 +177,6 @@ public class QuestionController {
 //        return "redirect:/questions";
 //    }
 //
-
-
-
-
-
-
-
 
 
     @RequestMapping(value = "/exit", method = RequestMethod.GET)
