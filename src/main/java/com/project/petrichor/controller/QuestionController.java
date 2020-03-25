@@ -50,9 +50,16 @@ public class QuestionController {
 
     @MessageMapping("/question")
     @SendTo("/topic/question")
-    public String questions(String question) throws Exception {
+    public String greeting(String question1,@ModelAttribute("activeEvent")  Event event) throws Exception {
+
         Thread.sleep(1000); // simulated delay
-        return question;
+
+        Question question=new Question();
+        question.setText(question1);
+        question.setEvent(event);
+        questionService.save(question);
+
+        return question1;
     }
 
     ////////////////////////
@@ -66,7 +73,7 @@ public class QuestionController {
             model.addAttribute("questionRegister",questionRegister);
             return "questions";
     }
-    
+
 
 
     @GetMapping(value = "/questions")
@@ -112,12 +119,14 @@ public class QuestionController {
 
 
     @RequestMapping(value = "/questionList/saveQuestion" , method = RequestMethod.POST)
-    public String saveQuestion(
-                               @ModelAttribute @Validated Question questionRegister,
+    public String saveQuestion(@ModelAttribute @Validated Question questionRegister,
                                @ModelAttribute("activeEvent")  Event event, Model model,
                                final RedirectAttributes redirectAttributes) {
+
+
         try {
             questionRegister.setEvent(event);
+            System.out.println("deneme-sdcfvbnmdcfvbnmvbnmn//////******");
             questionService.save(questionRegister);
             redirectAttributes.addFlashAttribute("msg", "success");
         } catch (Exception e) {
@@ -125,7 +134,9 @@ public class QuestionController {
         }
 
         return "redirect:/questions";
+
     }
+
 
 
     @RequestMapping(value = "/voteQuestion/{id}", method = RequestMethod.GET)
