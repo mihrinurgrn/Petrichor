@@ -1,16 +1,19 @@
 package com.project.petrichor.controller;
 
 
+import com.project.petrichor.model.AjaxResponseBody;
 import com.project.petrichor.model.Event;
 import com.project.petrichor.model.Question;
 import com.project.petrichor.service.EventService;
 import com.project.petrichor.service.QuestionService;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,14 +54,9 @@ public class QuestionController {
 
     @MessageMapping("/question")
     @SendTo("/topic/question")
-    public String greeting(String question1,@ModelAttribute("activeEvent")  Event event) throws Exception {
+    public String greeting(String question1) throws Exception {
 
         Thread.sleep(1000); // simulated delay
-
-        Question question=new Question();
-        question.setText(question1);
-        question.setEvent(event);
-        questionService.save(question);
 
         return question1;
     }
@@ -118,10 +117,11 @@ public class QuestionController {
    }
 
 
-    @RequestMapping(value = "/questionList/saveQuestion" , method = RequestMethod.POST)
-    public String saveQuestion(@ModelAttribute @Validated Question questionRegister,
-                               @ModelAttribute("activeEvent")  Event event, Model model,
-                               final RedirectAttributes redirectAttributes) {
+    @PostMapping("/questionList/saveQuestion")
+    public @ResponseBody ResponseEntity<AjaxResponseBody> saveQuestion(@Valid @RequestBody Question questionRegister,
+                                                        @ModelAttribute("activeEvent")  Event event, Model model, Errors errors,
+                                                        final RedirectAttributes redirectAttributes) {
+
 
 
         try {
@@ -133,7 +133,22 @@ public class QuestionController {
             redirectAttributes.addFlashAttribute("msg", "fail");
         }
 
-        return "redirect:/questions";
+
+        AjaxResponseBody result = new AjaxResponseBody();
+
+        //If error, just return a 400 bad request, along with the error message
+        if (errors.hasErrors()) {
+
+            result.setMsg(errors.getAllErrors()
+                    .stream().map(x -> x.getDefaultMessage())
+                    .collect(Collectors.joining(",")));
+            return ResponseEntity.badRequest().body(result);
+
+        }
+
+
+        return ResponseEntity.ok(result);
+
 
     }
 

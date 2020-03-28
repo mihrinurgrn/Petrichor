@@ -1,5 +1,5 @@
 var stompClient = null;
-var flag=0;
+
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -20,14 +20,9 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/question', function (greeting) {
-            let s=JSON.stringify(greeting);
-
-            if(flag==0)
-            {
-                flag=1;
-                showGreeting(JSON.parse(s).body);
-            }
-
+            let k=JSON.parse(greeting.body).text;
+            let m=JSON.stringify(k);
+            $("#greetings").append("<tr><td>" + m + "</td></tr>");
 
         });
     });
@@ -43,15 +38,36 @@ function disconnect() {
 
 function sendName() {
     if(stompClient !== null) {
-        flag=0;
         let q=JSON.stringify({'text': $("#txt-input").val()});
         let c=JSON.parse(q).text;
-        $("#greetings").append("<tr><td>" + c + "</td></tr>");
-       /* $.post('/questionList/saveQuestion');*/
+        let s=JSON.stringify(c);
         stompClient.send('/app/question', {}, c);
+        /* $.post('/questionList/saveQuestion');*/
+        var questionRegister = {}
+        questionRegister["text"] = $("#text").val();
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/questionList/saveQuestion",
+            data: JSON.stringify(questionRegister),
+            dataType: 'json',
+            cache: false,
+            timeout: 600000
+
+        });
+
+        /*
+                if(flag==0)
+                {
+                    flag=0;
+                    showGreeting(JSON.parse(s).body);
+                }
+
+                flag=0;*/
 
     }
 }
+
 
 
 function showGreeting(question1) {
@@ -61,13 +77,15 @@ function showGreeting(question1) {
 
 
 $(function () {
- /*   $("form").on('submit', function (e) {
-        $.post('/questionList/saveQuestion');
+    $("form-login").on('submit', function (e) {
         e.preventDefault();
-    });*/
-    $( "#connect" ).click(function() { connect(); });
+    });
+     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
 
 });
+
+
+
