@@ -38,12 +38,13 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     public void voteTheQuestion(Integer id) {
         Question question = questionRepository.findQuestionByQuestionId(id);
-        question.setVoteValue(question.getVoteValue()+1);
+        question.setVoteValue(question.getVoteValue() + 1);
         questionRepository.save(question);
     }
+
     @Override
     public Cookie createCookie(String name, String value) {
-        Cookie cookie=new Cookie(name,value);
+        Cookie cookie = new Cookie(name, value);
         return cookie;
     }
 

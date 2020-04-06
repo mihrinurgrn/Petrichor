@@ -7,6 +7,7 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 /* End Global rules */
 
 /* Start body rules */
@@ -24,11 +25,8 @@ body {
 }
 
 
-
 /* |||||||||||||||||||||||||||||||||||||||||||||*/
 /* //////////////////////////////////////////// */
-
-
 
 
 /* End body rules */
@@ -44,6 +42,7 @@ form {
     padding: 2%;
     background-image: linear-gradient(-225deg, #E3FDF5 50%, #FFE6FA 50%);
 }
+
 /* form Container */
 form .con {
     display: -webkit-flex;
@@ -63,15 +62,18 @@ header {
     margin: 2% auto 10% auto;
     text-align: center;
 }
+
 /* Login title form form */
 header h2 {
     font-size: 250%;
     font-family: 'Playfair Display', serif;
     color: #3e403f;
 }
-/*  A welcome message or an explanation of the login form */
-header p {letter-spacing: 0.05em;}
 
+/*  A welcome message or an explanation of the login form */
+header p {
+    letter-spacing: 0.05em;
+}
 
 
 /* //////////////////////////////////////////// */
@@ -84,7 +86,6 @@ header p {letter-spacing: 0.05em;}
     padding: 14.5px 0px 15px 9px;
     border-radius: 5px 0px 0px 5px;
 }
-
 
 
 /* Show/hide password Font Icon */
@@ -105,8 +106,9 @@ header p {letter-spacing: 0.05em;}
 
     cursor: pointer;
 }
+
 /* inputs form  */
-input[class="form-input"]{
+input[class="form-input"] {
     width: 240px;
     height: 50px;
 
@@ -124,7 +126,11 @@ input[class="form-input"]{
     transition: 0.2s linear;
 
 }
-input[id="txt-input"] {width: 250px;}
+
+input[id="txt-input"] {
+    width: 250px;
+}
+
 /* focus  */
 input:focus {
     transform: translateX(-2px);
@@ -157,6 +163,7 @@ button {
     margin: 7% auto;
     letter-spacing: 0.05em;
 }
+
 /* Submits */
 .submits {
     width: 48%;
@@ -166,10 +173,14 @@ button {
 }
 
 /*       Forgot Password button FAF3DD  */
-.frgt-pass {background: transparent;}
+.frgt-pass {
+    background: transparent;
+}
 
 /*     Sign Up button  */
-.sign-up {background: #B8F2E6;}
+.sign-up {
+    background: #B8F2E6;
+}
 
 
 /* buttons hover */
@@ -182,6 +193,7 @@ button:hover {
 button:hover {
     animation: ani9 0.4s ease-in-out infinite alternate;
 }
+
 @keyframes ani9 {
     0% {
         transform: translateY(3px);

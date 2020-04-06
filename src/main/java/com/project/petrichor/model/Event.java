@@ -52,12 +52,12 @@ public class Event {
 
     private String eventPasscode;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "event")
-    private List<Question> questions=new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    private List<Question> questions = new ArrayList<>();
 
-    public Event(String eventName, String eventPasscode){
-        this.eventName=eventName;
-        this.eventPasscode=eventPasscode;
+    public Event(String eventName, String eventPasscode) {
+        this.eventName = eventName;
+        this.eventPasscode = eventPasscode;
     }
 
     public Event() {

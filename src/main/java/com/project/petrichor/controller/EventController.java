@@ -27,7 +27,7 @@ public class EventController {
     @GetMapping("/event")
     public String addEvent(Model model) {
         Event eventRegister = new Event();
-        model.addAttribute("eventRegister",eventRegister);
+        model.addAttribute("eventRegister", eventRegister);
         return "event";
     }
 
@@ -35,38 +35,22 @@ public class EventController {
     public String eventSave(@ModelAttribute @Validated Event eventRegister,
                             final RedirectAttributes redirectAttributes) {
 
-          List<Event> EventList=eventService.findAll();
+        List<Event> EventList = eventService.findAll();
 
-              int i;
-              for (i = 0; i < EventList.size(); i++) {
+        int i;
+        for (i = 0; i < EventList.size(); i++) {
 
-                  if (EventList.get(i).getEventPasscode().equals(eventRegister.getEventPasscode())) {
-                      redirectAttributes.addFlashAttribute("msg", "Already created with this passcode, try another");
-                      return "redirect:/event";
-                  }
-              }
+            if (EventList.get(i).getEventPasscode().equals(eventRegister.getEventPasscode())) {
+                redirectAttributes.addFlashAttribute("msg", "Already created with this passcode, try another");
+                return "redirect:/event";
+            }
+        }
 
-            eventService.save(eventRegister);
-            redirectAttributes.addFlashAttribute("msg", "Event created");
+        eventService.save(eventRegister);
+        redirectAttributes.addFlashAttribute("msg", "Event created");
 
         return "redirect:/event";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

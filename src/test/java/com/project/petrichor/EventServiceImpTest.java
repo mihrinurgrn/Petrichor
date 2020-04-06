@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -32,10 +33,10 @@ class EventServiceImpTest {
     private EventServiceImp eventServiceImp;
 
     @BeforeAll
-    public static void beforeAll(){
+    public static void beforeAll() {
         System.out.println("@Before All");
 
-        event = new Event("eventNameDeneme","eventPasscodeDeneme");
+        event = new Event("eventNameDeneme", "eventPasscodeDeneme");
         event2 = new Event("eventNameDeneme2", "eventPasscodeDeneme2");
         events = new ArrayList<>();
         events.add(event);
@@ -43,19 +44,19 @@ class EventServiceImpTest {
     }
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         System.out.println("@BeforeEach");
         assertNotNull(events);
     }
 
     @Test
-    public void should_find_all_events(){
+    public void should_find_all_events() {
         Mockito.when(eventRepository.findAll()).thenReturn(events);
         assertEquals(eventServiceImp.findAll().size(), events.size());
     }
 
     @Test
-    public void should_save_event(){
+    public void should_save_event() {
         Event event = new Event("eventNameSave", "eventPasscodeSave");
 
         Mockito.when(eventRepository.save(event)).thenReturn(event);
@@ -64,7 +65,7 @@ class EventServiceImpTest {
     }
 
     @Test
-    public void should_return_passcode(){
+    public void should_return_passcode() {
         Event event = new Event("eventName", "eventPasscode");
         Mockito.when(eventRepository.findByEventPasscode("eventPasscode")).thenReturn(event);
         assertEquals(eventServiceImp.findByPassCode("eventPasscode"), event);

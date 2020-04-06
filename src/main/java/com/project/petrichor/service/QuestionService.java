@@ -14,10 +14,9 @@ public interface QuestionService {
 
     void voteTheQuestion(Integer id);
 
-    Cookie createCookie(String name,String value);
+    Cookie createCookie(String name, String value);
 
     /*List<Question> orderByVoteNumber(List<Question> questions);*/
-
 
 
     Question findQuestionById(int id);

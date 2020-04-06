@@ -13,6 +13,7 @@ public class EventServiceImp implements EventService {
 
     @Autowired
     EventRepository eventRepository;
+
     @Override
     public Event save(Event event) {
         return eventRepository.save(event);

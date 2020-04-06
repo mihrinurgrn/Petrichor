@@ -1,6 +1,5 @@
 var stompClient = null;
 
-
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -14,16 +13,13 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/websocket');
+    var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/question', function (greeting) {
-            let k=JSON.parse(greeting.body).text;
-            let m=JSON.stringify(k);
-            $("#greetings").append("<tr><td>" + m + "</td></tr>");
-
+        stompClient.subscribe('/topic/greetings', function (greeting) {
+            showGreeting(JSON.parse(greeting.body).content);
         });
     });
 }
@@ -37,55 +33,22 @@ function disconnect() {
 }
 
 function sendName() {
-    if(stompClient !== null) {
-        let q=JSON.stringify({'text': $("#txt-input").val()});
-        let c=JSON.parse(q).text;
-        let s=JSON.stringify(c);
-        stompClient.send('/app/question', {}, c);
-        /* $.post('/questionList/saveQuestion');*/
-        var questionRegister = {}
-        questionRegister["text"] = $("#text").val();
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: "/questionList/saveQuestion",
-            data: JSON.stringify(questionRegister),
-            dataType: 'json',
-            cache: false,
-            timeout: 600000
+    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+}
 
-        });
+function showGreeting(message) {
 
-        /*
-                if(flag==0)
-                {
-                    flag=0;
-                    showGreeting(JSON.parse(s).body);
-                }
-
-                flag=0;*/
-
+    {
+        $("#greetings").append("<tr><td>" + message + "</td></tr>");
     }
+
 }
-
-
-
-function showGreeting(question1) {
-
-    $("#greetings").append("<tr><td>" + question1 + "</td></tr>");
-}
-
 
 $(function () {
-    $("form-login").on('submit', function (e) {
+    $("form").on('submit', function (e) {
         e.preventDefault();
     });
-     $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
+    $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
-
 });
-
-
-

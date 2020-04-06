@@ -35,12 +35,12 @@ public class QuestionServiceImpTest {
     private QuestionServiceImp questionServiceImp;
 
     @BeforeAll
-    public static void beforeAll(){
+    public static void beforeAll() {
         System.out.println("@Before All");
-        event = new Event("eventNameDeneme","eventPasscodeDeneme");
+        event = new Event("eventNameDeneme", "eventPasscodeDeneme");
 
-        question = new Question("questionText",0, event);
-        question2 = new Question("questionText2",0, event);
+        question = new Question("questionText", 0, event);
+        question2 = new Question("questionText2", 0, event);
         event = new Event("eventNameDeneme", "eventPasscodeDeneme");
         questions = new ArrayList<>();
         questions.add(question);
@@ -48,19 +48,19 @@ public class QuestionServiceImpTest {
     }
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         System.out.println("@BeforeEach");
         assertNotNull(questions);
     }
 
     @Test
-    public void should_find_all_questions(){
+    public void should_find_all_questions() {
         Mockito.when(questionRepository.findAll()).thenReturn(questions);
         assertEquals(questionServiceImp.findAll().size(), questions.size());
     }
 
     @Test
-    public void should_save_question(){
+    public void should_save_question() {
         Question questionSave = new Question("questionTextSave", 0, event);
 
         Mockito.when(questionRepository.save(questionSave)).thenReturn(questionSave);

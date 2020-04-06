@@ -16,10 +16,10 @@ public class Question {
     @NotNull
     private String text;
 
-    private Integer voteValue=0;
+    private Integer voteValue = 0;
     @NotNull
     @ManyToOne
-    @JoinColumn(name="eventId")
+    @JoinColumn(name = "eventId")
     private Event event;
 
     public Integer getQuestionId() {
@@ -55,9 +55,9 @@ public class Question {
     }
 
     public Question(String text, Integer voteValue, Event event) {
-        this.text=text;
-        this.voteValue=voteValue;
-        this.event=event;
+        this.text = text;
+        this.voteValue = voteValue;
+        this.event = event;
     }
 
     public Question() {
