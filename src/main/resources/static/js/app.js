@@ -1,4 +1,5 @@
 var stompClient = null;
+let gShowed = false;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -18,9 +19,11 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
-        });
+        if(gShowed === false){
+            stompClient.subscribe('/topic/greetings', function (greeting) {
+                showGreeting(JSON.parse(greeting.body).content);
+            });
+        }
     });
 }
 
@@ -34,6 +37,18 @@ function disconnect() {
 
 function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+    var questionRegister = {}
+    questionRegister["text"] = $("#name").val();
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/questionList/saveQuestion",
+        data: JSON.stringify(questionRegister),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000
+
+    });
 }
 
 function showGreeting(message) {
@@ -48,6 +63,8 @@ $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
+    console.log("test");
+
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
