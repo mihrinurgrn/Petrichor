@@ -1,15 +1,12 @@
 package com.project.petrichor.controller;
 
 
-import com.project.petrichor.model.AjaxResponseBody;
-import com.project.petrichor.model.Event;
-import com.project.petrichor.model.Greeting;
-import com.project.petrichor.model.HelloMessage;
-import com.project.petrichor.model.Question;
+import com.project.petrichor.model.*;
 import com.project.petrichor.service.EventService;
 import com.project.petrichor.service.QuestionService;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -52,18 +49,15 @@ public class QuestionController {
         return new String();
     }
 
-    ////////////////////
-
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(HelloMessage message) throws Exception {
         Thread.sleep(1000); // simulated delay
         return new Greeting( HtmlUtils.htmlEscape(message.getName()) );
     }
+    
 
-
-    ////////////////////////
-
+/*
     @GetMapping(value = "/questions2")
     public String findEvent2(Model model, @ModelAttribute("activePasscode") String passcode2
             , @ModelAttribute("activeEvent") Event event) {
@@ -74,6 +68,8 @@ public class QuestionController {
         model.addAttribute("questionRegister", questionRegister);
         return "questions";
     }
+*/
+
 
 
     @GetMapping(value = "/questions")
@@ -113,15 +109,35 @@ public class QuestionController {
         return "questions";
     }
 
+/*    @GetMapping("/example")
+    public ResponseEntity<Object> getQuestions() {
+        MyResponse<List<Question>> response = new MyResponse<>("success", questionService.findAll());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }*/
+
+    @GetMapping("/example")
+    public ResponseEntity<AjaxResponseBody> getQuestions(Model model, @ModelAttribute("activePasscode") String passcode2
+            , @ModelAttribute("activeEvent") Event event) {
+
+        passcode2 = event.getEventPasscode();
+        List<Question> questions = questionService.findQuestionsByPasscode(passcode2);
+        model.addAttribute("questions", questions);
+        Question questionRegister = new Question();
+        model.addAttribute("questionRegister", questionRegister);
+
+
+        AjaxResponseBody result = new AjaxResponseBody();
+        result.setResult(questions);
+        result.setMsg("ok");
+        return ResponseEntity.ok(result);
+    }
 
     @PostMapping("/questionList/saveQuestion")
     public @ResponseBody
     ResponseEntity<AjaxResponseBody> saveQuestion(@Valid @RequestBody Question questionRegister,
                                                   @ModelAttribute("activeEvent") Event event, Model model, Errors errors,
                                                   final RedirectAttributes redirectAttributes) {
-
-
-        try {
+         try {
             questionRegister.setEvent(event);
             System.out.println("deneme-sdcfvbnmdcfvbnmvbnmn//////******");
             questionService.save(questionRegister);
@@ -130,11 +146,8 @@ public class QuestionController {
             redirectAttributes.addFlashAttribute("msg", "fail");
         }
 
-
         AjaxResponseBody result = new AjaxResponseBody();
-
-        //If error, just return a 400 bad request, along with the error message
-        if (errors.hasErrors()) {
+         if (errors.hasErrors()) {
 
             result.setMsg(errors.getAllErrors()
                     .stream().map(x -> x.getDefaultMessage())
@@ -142,12 +155,8 @@ public class QuestionController {
             return ResponseEntity.badRequest().body(result);
 
         }
-
-
-        return ResponseEntity.ok(result);
-
-
-    }
+            return ResponseEntity.ok(result);
+   }
 
 
     @RequestMapping(value = "/voteQuestion/{id}", method = RequestMethod.GET)

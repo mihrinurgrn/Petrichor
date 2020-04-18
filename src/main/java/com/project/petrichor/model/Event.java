@@ -1,6 +1,8 @@
 package com.project.petrichor.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,6 +55,7 @@ public class Event {
     private String eventPasscode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
     public Event(String eventName, String eventPasscode) {

@@ -8,7 +8,9 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
+/*
     List<Question> findAll();
+*/
 
     List<Question> findQuestionsByEvent_EventPasscode(String Passcode);
 

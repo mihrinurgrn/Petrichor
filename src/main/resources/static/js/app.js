@@ -1,5 +1,5 @@
 var stompClient = null;
-let gShowed = false;
+
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -19,11 +19,11 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        if(gShowed === false){
+
             stompClient.subscribe('/topic/greetings', function (greeting) {
                 showGreeting(JSON.parse(greeting.body).content);
             });
-        }
+
     });
 }
 
@@ -50,12 +50,52 @@ function sendName() {
 
     });
 }
-
-function showGreeting(message) {
-
-    {
+function showGreeting(message)
+  {
         $("#greetings").append("<tr><td>" + message + "</td></tr>");
-    }
+
+      $.ajax({
+          type : "GET",
+          url : /*window.location+*/"/example",
+          success : function(result) {
+              console.log(result);
+              var table = $('#tableQuestions');
+              if (result.msg == "ok") {
+                  $('#tableQuestions').empty();
+                  var custList = "";
+                  $.each(result.result, function(i, question) {
+                      /*var html = '';
+                          html += '<option value="0"></option>';
+
+                          html += '<option value="' + question.questionId + '">'
+                              + question.text
+                              +question.voteValue
+                              + '</option>';
+
+                      html += '</option>';
+                      $('#getResultDiv .list-group').append(html)*/
+
+                      $('#tableQuestions').append("<tr><td>" +  question.text + "</td><td>" + question.voteValue + "</td><td>\n" +
+                          "                                <button type=\"submit\" value=\"Submit\"> Vote the question</button>\n" +
+                          "\n" +
+                          "                            </td></tr>");
+
+
+                  });
+                  console.log("Success: ", result);
+              } else {
+                  $("#getResultDiv").html("<strong>Error</strong>");
+                  console.log("Fail: ", result);
+              }
+          },
+          error : function(e) {
+              $("#getResultDiv").html("<strong>Error</strong>");
+              console.log("ERROR: ", e);
+          }
+      });
+
+
+
 
 }
 

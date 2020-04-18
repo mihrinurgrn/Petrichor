@@ -39,14 +39,16 @@
         <div class="col-md-6">
             <form id="login-form"
                   th:name="passcode" th:object="${questionRegister}">
-                <div class="con">
-                    <table class="table table-bordered">
+                <div class="con" id="getResultDiv">
+                    <ul class="list-group">
+                    </ul>
+                  <!--  <table class="table table-bordered">
                         <tr>
                             <th>Question</th>
                             <th>Votes</th>
                         </tr>
 
-                        <tr id="greetings" th:each="question : ${questions}" th:object="${question}">
+                        <tr  id="greetings" th:each="question : ${questions}" th:object="${question}">
                             <td th:text="${question.text} "></td>
                             <td th:text="${question.voteValue} "></td>
 
@@ -55,23 +57,31 @@
 
                             </td>
                         </tr>
+                    </table>-->
+
+
+
+                    <table id="tableQuestions" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Votes</th>
+
+                        </tr>
+                        </thead>
+<!--
+                        <tr  id="greetings" th:each="question : ${questions}" th:object="${question}">
+                            <td th:text="${question.text} "></td>
+                            <td th:text="${question.voteValue} "></td>
+
+                            <td>
+                                <a th:href="@{/voteQuestion/{id} (id=${question.questionId})}">Vote the question</a>
+
+                            </td>
+                        </tr>-->
                     </table>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table id="conversation" class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>New</th>
-                                </tr>
-                                </thead>
-                                <tbody id="greetings">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <br>
+                         <br>
                     <div class="field-set">
                 <span class="input-item">
            <i class="fa fa-user-circle"></i>
@@ -88,19 +98,7 @@
             </form>
         </div>
     </div>
-  <!--  <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>-->
+
 </div>
 </body>
 </html>

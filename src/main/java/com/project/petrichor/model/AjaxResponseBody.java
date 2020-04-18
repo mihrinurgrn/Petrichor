@@ -1,9 +1,13 @@
 package com.project.petrichor.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
+
 
 public class AjaxResponseBody {
     String msg;
+   /* @JsonIgnore*/
     List<Question> result;
 
     public String getMsg() {
@@ -21,5 +25,7 @@ public class AjaxResponseBody {
     public void setResult(List<Question> result) {
         this.result = result;
     }
+
+
 
 }
