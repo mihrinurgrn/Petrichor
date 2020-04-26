@@ -106,6 +106,7 @@ public class QuestionController {
         }
         Question questionRegister = new Question();
         model.addAttribute("questionRegister", questionRegister);
+
         return "questions";
     }
 
@@ -158,6 +159,31 @@ public class QuestionController {
             return ResponseEntity.ok(result);
    }
 
+    @PostMapping("/vote")
+    public @ResponseBody
+    ResponseEntity<AjaxResponseBody> findEvent(@Valid @RequestBody Question question, HttpServletRequest request,
+                            HttpServletResponse response,
+                            @CookieValue(value = "vote", defaultValue = "1") String voteValue,
+                            @CookieValue(value = "question", defaultValue = "null") String questionId) {
+        Cookie[] cookies = request.getCookies();
+        AjaxResponseBody result = new AjaxResponseBody();
+
+        int id=question.getQuestionId();
+        question=questionService.findQuestionById(id);
+        System.out.println(question.toString());
+
+
+        int k;
+        for (k = 0; k < cookies.length; k++) {
+            if (cookies[k].getValue().equals(question.getQuestionId())) {
+                return ResponseEntity.ok(result);
+            }
+        }
+        questionService.voteTheQuestion(question.getQuestionId());
+        Cookie cookie = questionService.createCookie(String.valueOf(id), String.valueOf(id));
+        response.addCookie(cookie);
+        return ResponseEntity.ok(result);
+    }
 
     @RequestMapping(value = "/voteQuestion/{id}", method = RequestMethod.GET)
     public String findEvent(@PathVariable("id") Integer id, HttpServletRequest request,

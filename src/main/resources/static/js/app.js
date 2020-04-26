@@ -39,6 +39,7 @@ function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
     var questionRegister = {}
     questionRegister["text"] = $("#name").val();
+    console.log(questionRegister);
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -47,42 +48,40 @@ function sendName() {
         dataType: 'json',
         cache: false,
         timeout: 600000
-
     });
+}
+function voteQuestion(questionId) {
+  let id=JSON.stringify( questionId )
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/vote",
+        data: "{\"questionId\": "+ id +"}",
+        dataType: 'json',
+        cache: false,
+        timeout: 600000
+    });
+
+
 }
 function showGreeting(message)
   {
-        $("#greetings").append("<tr><td>" + message + "</td></tr>");
-
-      $.ajax({
+          $.ajax({
           type : "GET",
-          url : /*window.location+*/"/example",
+          url : "/example",
           success : function(result) {
               console.log(result);
               var table = $('#tableQuestions');
               if (result.msg == "ok") {
                   $('#tableQuestions').empty();
-                  var custList = "";
                   $.each(result.result, function(i, question) {
-                      /*var html = '';
-                          html += '<option value="0"></option>';
-
-                          html += '<option value="' + question.questionId + '">'
-                              + question.text
-                              +question.voteValue
-                              + '</option>';
-
-                      html += '</option>';
-                      $('#getResultDiv .list-group').append(html)*/
-
-                      $('#tableQuestions').append("<tr><td>" +  question.text + "</td><td>" + question.voteValue + "</td><td>\n" +
-                          "                                <button type=\"submit\" value=\"Submit\"> Vote the question</button>\n" +
+                       $('#tableQuestions').append("<tr><td>" +  question.text + "</td><td>" + question.voteValue + "</td><td>\n" +
+                          "                                <button onclick=\"voteQuestion(" + question.questionId + ")\" class=\"btn btn-default\" id=\"vote\" type=\"submit\" value=\"question.questionId\"> Vote the question</button>\n" +
                           "\n" +
                           "                            </td></tr>");
-
-
-                  });
+                         });
                   console.log("Success: ", result);
+
               } else {
                   $("#getResultDiv").html("<strong>Error</strong>");
                   console.log("Fail: ", result);
@@ -93,10 +92,6 @@ function showGreeting(message)
               console.log("ERROR: ", e);
           }
       });
-
-
-
-
 }
 
 $(function () {
@@ -108,4 +103,5 @@ $(function () {
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
+    $( "#vote" ).click(function() { voteQuestion(); });
 });

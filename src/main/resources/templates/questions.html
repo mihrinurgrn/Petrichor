@@ -42,7 +42,7 @@
                 <div class="con" id="getResultDiv">
                     <ul class="list-group">
                     </ul>
-                  <!--  <table class="table table-bordered">
+                    <table class="table table-bordered">
                         <tr>
                             <th>Question</th>
                             <th>Votes</th>
@@ -53,11 +53,13 @@
                             <td th:text="${question.voteValue} "></td>
 
                             <td>
-                                <a th:href="@{/voteQuestion/{id} (id=${question.questionId})}">Vote the question</a>
+                               <!-- <a th:href="@{/voteQuestion/{id} (id=${question.questionId})}">Vote the question</a>-->
+                                <input type="button" value="Vote the question" th:onclick="|voteQuestion(${question.questionId})|"/>
+
 
                             </td>
                         </tr>
-                    </table>-->
+                    </table>
 
 
 
