@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -55,7 +56,14 @@ public class QuestionController {
         Thread.sleep(1000); // simulated delay
         return new Greeting( HtmlUtils.htmlEscape(message.getName()) );
     }
-    
+
+
+    @MessageMapping("/vote")
+    @SendTo("/topic/votes")
+    public String vote(String qId) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return qId;
+    }
 
 /*
     @GetMapping(value = "/questions2")
@@ -67,8 +75,21 @@ public class QuestionController {
         Question questionRegister = new Question();
         model.addAttribute("questionRegister", questionRegister);
         return "questions";
-    }
-*/
+    }*/
+
+   /* @GetMapping(value = "/questions2")
+    public String findEvent2(HttpServletRequest request,Model model) {
+
+
+        Event event= (Event) request.getSession().getAttribute("activeEvent");
+
+        List<Question> questions = questionService.findQuestionsByPasscode(event.getEventPasscode());
+
+        model.addAttribute("questions", questions);
+        Question questionRegister = new Question();
+        model.addAttribute("questionRegister", questionRegister);
+        return "questions";
+    }*/
 
 
 
@@ -166,6 +187,7 @@ public class QuestionController {
                             @CookieValue(value = "vote", defaultValue = "1") String voteValue,
                             @CookieValue(value = "question", defaultValue = "null") String questionId) {
         Cookie[] cookies = request.getCookies();
+        request.getSession();
         AjaxResponseBody result = new AjaxResponseBody();
 
         int id=question.getQuestionId();
@@ -175,7 +197,8 @@ public class QuestionController {
 
         int k;
         for (k = 0; k < cookies.length; k++) {
-            if (cookies[k].getValue().equals(question.getQuestionId())) {
+
+            if (cookies[k].getName().equals(question.getQuestionId().toString())) {
                 return ResponseEntity.ok(result);
             }
         }

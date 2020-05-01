@@ -22,7 +22,13 @@ function connect() {
 
             stompClient.subscribe('/topic/greetings', function (greeting) {
                 showGreeting(JSON.parse(greeting.body).content);
+
             });
+
+        stompClient.subscribe('/topic/votes', function () {
+            showGreeting();
+
+        });
 
     });
 }
@@ -50,6 +56,10 @@ function sendName() {
         timeout: 600000
     });
 }
+function sendVote(id)
+{
+    stompClient.send("/app/vote", {},id);
+}
 function voteQuestion(questionId) {
   let id=JSON.stringify( questionId )
     $.ajax({
@@ -61,11 +71,27 @@ function voteQuestion(questionId) {
         cache: false,
         timeout: 600000
     });
-
-
+    sendVote(id);
 }
-function showGreeting(message)
+function compare(x)
+{
+    let searchParams = new URLSearchParams(window.location.search);
+    var p=searchParams.has('passcode')
+    let param = searchParams.get('passcode')
+
+    if(param==x){
+        return true;
+
+    }
+    else
+        return false;
+}
+function showGreeting()
   {
+          var url=window.location;
+          var k=url.toString()
+
+      console.log(k);
           $.ajax({
           type : "GET",
           url : "/example",
@@ -75,10 +101,16 @@ function showGreeting(message)
               if (result.msg == "ok") {
                   $('#tableQuestions').empty();
                   $.each(result.result, function(i, question) {
-                       $('#tableQuestions').append("<tr><td>" +  question.text + "</td><td>" + question.voteValue + "</td><td>\n" +
-                          "                                <button onclick=\"voteQuestion(" + question.questionId + ")\" class=\"btn btn-default\" id=\"vote\" type=\"submit\" value=\"question.questionId\"> Vote the question</button>\n" +
-                          "\n" +
-                          "                            </td></tr>");
+                    var x=question.event.eventPasscode;
+
+                      if(compare(x)){
+                          $('#tableQuestions').append("<tr><td>" +  question.text + "</td><td>" + question.voteValue + "</td><td>\n" +
+                              "                                <button onclick=\"voteQuestion(" + question.questionId + ")\" class=\"btn btn-default\" id=\"vote\" type=\"submit\" value=\"question.questionId\"> Vote the question</button>\n" +
+                              "\n" +
+                              "                            </td></tr>");
+
+                      }
+
                          });
                   console.log("Success: ", result);
 

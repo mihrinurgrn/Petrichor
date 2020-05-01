@@ -45,6 +45,7 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     public Cookie createCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
         return cookie;
     }
 
