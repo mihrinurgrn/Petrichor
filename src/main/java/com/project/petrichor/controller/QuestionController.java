@@ -198,6 +198,9 @@ public class QuestionController {
         int k;
         for (k = 0; k < cookies.length; k++) {
 
+
+            /*cookies[k].setMaxAge(0);
+            response.addCookie(cookies[k]);*/
             if (cookies[k].getName().equals(question.getQuestionId().toString())) {
                 return ResponseEntity.ok(result);
             }

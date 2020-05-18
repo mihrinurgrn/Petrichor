@@ -14,6 +14,7 @@ function setConnected(connected) {
 }
 
 function connect() {
+    showGreeting();
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
